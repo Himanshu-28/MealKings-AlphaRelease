@@ -1,0 +1,10 @@
+package com.mealkings.restaurant.exceptions;
+
+public class IDNotFound extends Exception {
+
+	public IDNotFound(String message) {
+		super(message);
+		// TODO Auto-generated constructor stub
+	}
+
+}

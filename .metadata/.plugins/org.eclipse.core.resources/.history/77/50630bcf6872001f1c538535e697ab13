@@ -1,0 +1,6 @@
+package com.mealkings.restaurant.service;
+
+public interface RestaurantCRUD {
+	
+	public boolean addRestaurant
+}

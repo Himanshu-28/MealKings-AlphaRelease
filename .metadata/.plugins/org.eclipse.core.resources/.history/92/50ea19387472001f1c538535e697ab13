@@ -1,0 +1,14 @@
+package com.mealkings.restaurant.exceptions;
+
+public class IDNotFound extends Exception {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	public DataMissingException(String message) {
+		super(message);
+	}
+
+}

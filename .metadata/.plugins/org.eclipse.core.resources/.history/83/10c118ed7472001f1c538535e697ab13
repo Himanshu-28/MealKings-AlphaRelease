@@ -1,0 +1,15 @@
+package com.mealkings.restaurant.service;
+
+import com.mealkings.restaurant.entity.Restaurant;
+import com.mealkings.restaurant.exceptions.DataMissingException;
+
+public interface RestaurantCRUD {
+	
+	public void addRestaurant(Restaurant restaurant) throws DataMissingException;
+	
+	public Restaurant getRestaurantDetails(int id);
+	
+	public boolean updateRestaurantDetails(int id, Restaurant restaurant);
+	
+	public boolean deleteRestaurant(int id);
+}

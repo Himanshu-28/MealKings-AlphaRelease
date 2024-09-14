@@ -1,0 +1,10 @@
+spring.application.name=Restaurant
+
+# ===============================
+# = DATA SOURCE
+# ===============================
+# Configurations for the database connection
+spring.datasource.url=jdbc:mysql://localhost:3306/mealkings
+spring.datasource.username=root
+spring.datasource.password=root
+spring.datasource.driver-class-name=com.mysql.jdbc.Driver

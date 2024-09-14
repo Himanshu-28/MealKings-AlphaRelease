@@ -1,0 +1,48 @@
+package com.mealkings.restaurant.service;
+
+import org.springframework.beans.factory.annotation.Autowired;
+
+import com.mealkings.restaurant.entity.Restaurant;
+import com.mealkings.restaurant.exceptions.DataMissingException;
+import com.mealkings.restaurant.repository.RestaurantRepository;
+
+public class RestaurantCRUDImpl implements RestaurantCRUD {
+	
+	@Autowired
+	private RestaurantRepository rrepo;
+	
+	private boolean checkNewRestaurant(Restaurant restaurant) {
+		return (restaurant != null
+				&& restaurant.getId() != 0
+				&& restaurant.getName() != null
+				&& restaurant.getMobile() != null
+				&& restaurant.getAddress()!=null);
+	}
+	
+	@Override
+	public void addRestaurant(Restaurant restaurant) throws DataMissingException {
+		
+		if(checkNewRestaurant(restaurant))
+			rrepo.save(restaurant);
+		else
+			throw new DataMissingException("Incomplete or null data!");
+	}
+
+	@Override
+	public Restaurant getRestaurantDetails(int id) {
+		if()
+	}
+
+	@Override
+	public boolean updateRestaurantDetails(int id, Restaurant restaurant) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean deleteRestaurant(int id) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+}

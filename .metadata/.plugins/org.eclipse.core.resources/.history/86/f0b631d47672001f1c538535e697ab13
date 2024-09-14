@@ -1,0 +1,5 @@
+package com.mealkings.restaurant.service;
+
+public class RestaurantCRUDServiceImpl {
+
+}

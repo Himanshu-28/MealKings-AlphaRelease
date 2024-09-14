@@ -1,0 +1,39 @@
+package com.mealkings.restaurant.service;
+
+import org.springframework.beans.factory.annotation.Autowired;
+
+import com.mealkings.restaurant.entity.Restaurant;
+import com.mealkings.restaurant.exceptions.DataMissingException;
+import com.mealkings.restaurant.exceptions.IDNotFoundException;
+
+public class RestaurantCRUDServiceImpl implements RestaurantCRUDService {
+	
+	@Autowired
+	private 
+
+	@Override
+	public void addRestaurant(Restaurant restaurant) throws DataMissingException {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public Restaurant getRestaurantDetails(int id) throws IDNotFoundException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void updateRestaurantDetails(int id, Restaurant restaurant)
+			throws IDNotFoundException, DataMissingException {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void deleteRestaurant(int id) throws IDNotFoundException {
+		// TODO Auto-generated method stub
+		
+	}
+
+}
