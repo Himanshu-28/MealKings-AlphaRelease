@@ -1,0 +1,87 @@
+package com.mealkings.InventoryManagement.service;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
+import com.mealkings.InventoryManagement.entity.Item;
+import com.mealkings.InventoryManagement.exceptions.DataMissingException;
+import com.mealkings.InventoryManagement.exceptions.IDMismatchException;
+import com.mealkings.InventoryManagement.exceptions.IDNotFoundException;
+import com.mealkings.InventoryManagement.repository.ItemRepository;
+import com.mealkings.InventoryManagement.repository.RestaurantRepository;
+
+@Component
+public class InventoryCRUDImpl implements InventoryCRUD {
+	
+	// Call to the item repository to access CRUD functions
+	@Autowired
+	private ItemRepository irepo;
+	
+	// Function to check if the string passed is empty or pointing to null
+	private boolean isNullOrEmpty(String str) {
+	    return str == null || str.isEmpty();
+	}
+	
+	// Function to check if the restaurant object is valid and has all the fields
+	private boolean checkNewItem (Item item) {
+	    if (item == null ||
+	        item.getItem_id() <= 0 || 
+	        item.getItem_cost() <= 0 || 
+	        item.getQuantity() <= 0 || 
+	        item.getRestaurant_id() <= 0 || 
+	        isNullOrEmpty(item.getItem_name()) || 
+	        isNullOrEmpty(""+item.getFood_class())) {
+	        return true;
+	    }
+	    return false;
+	}
+	
+	// Function to add a new restaurant to the database
+	@Override
+	public void addItem(Item item) throws DataMissingException {
+		
+		if(checkNewRestaurant(item))
+			irepo.save(item);
+		else
+			throw new DataMissingException("Incomplete or null data!");
+	}
+
+	// Function to get the details of the restaurant basis the ID
+	@Override
+	public Restaurant getRestaurantDetails(int id) throws IDNotFoundException {
+		Restaurant restaurant = rrepo.findById(id)
+	            .orElseThrow(() -> new IDNotFoundException("ID not present!"));
+		return restaurant;
+	}
+
+	// Function to update the restaurant details
+	@Override
+	public void updateRestaurantDetails(int id, Restaurant restaurant) throws IDNotFoundException, DataMissingException, IDMismatchException {
+		
+		// Retrieve the existing restaurant
+	    Restaurant oldRestaurantData = rrepo.findById(id)
+	            .orElseThrow(() -> new IDNotFoundException("ID not present!"));
+		
+		if(checkNewRestaurant(restaurant))
+			throw new DataMissingException("Incomplete Data!");
+		
+		if(id != restaurant.getId())
+			throw new IDMismatchException("ID in the url and in the message body not matching!");
+		
+		oldRestaurantData.setName(restaurant.getName());
+		oldRestaurantData.setMobile(restaurant.getMobile());
+		oldRestaurantData.setAddress(restaurant.getAddress());
+		
+		rrepo.save(oldRestaurantData);
+	}
+	
+	// Function to delete the restaurant from the database
+	@Override
+	public void deleteRestaurant(int id) throws IDNotFoundException {
+		Restaurant restaurant = rrepo.findById(id)
+	            .orElseThrow(() -> new IDNotFoundException("ID not present!"));
+		
+		rrepo.delete(restaurant);
+	}
+
+}

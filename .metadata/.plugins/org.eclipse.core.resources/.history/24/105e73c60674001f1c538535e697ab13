@@ -1,0 +1,7 @@
+package com.mealkings.InventoryManagement.repository;
+
+import org.springframework.data.repository.CrudRepository;
+
+import com.mealkings.restaurant.entity.Restaurant;
+
+public interface ItemRepositor extends CrudRepository<Restaurant, Integer> {}
