@@ -15,6 +15,8 @@ public interface RestaurantCRUDService {
 	public void updateRestaurantDetails(int id, Restaurant restaurant) throws IDNotFoundException, DataMissingException, IDMismatchException;
 	
 	public void deleteRestaurant(int id) throws IDNotFoundException;
+	
+	public double getRestaurantRating(int id) throws IDNotFoundException;
 
 	public void addItem(Item item) throws DataMissingException;
 	

@@ -59,4 +59,9 @@ public class RestaurantCRUDServiceImpl implements RestaurantCRUDService {
 	public void deleteItem(int id) throws IDNotFoundException {
 		resCrudOps.deleteItem(id);
 	}
+
+	@Override
+	public double getRestaurantRating(int id) throws IDNotFoundException {
+		return resCrudOps.getRestaurantRating(id);
+	}
 }

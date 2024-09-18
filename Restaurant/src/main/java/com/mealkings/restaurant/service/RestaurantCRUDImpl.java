@@ -148,4 +148,12 @@ public class RestaurantCRUDImpl implements RestaurantCRUD {
 		
 		irepo.delete(item);
 	}
+
+	@Override
+	public double getRestaurantRating(int id) throws IDNotFoundException {
+		Restaurant res = rrepo.findById(id)
+	            .orElseThrow(() -> new IDNotFoundException("Restaurant ID not present!"));
+		
+		return res.getRatings();
+	}
 }

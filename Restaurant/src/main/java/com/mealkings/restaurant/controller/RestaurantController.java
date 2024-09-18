@@ -58,6 +58,18 @@ public class RestaurantController {
 		}
 	}
 	
+	// API call to fetch data from the database basis the ID
+	@GetMapping("/{id}/rating")
+	public ResponseEntity<Double> getRestaurantRating(@PathVariable int id)
+	{
+		try {
+			return ResponseEntity.ok(resService.getRestaurantRating(id));
+		} catch (IDNotFoundException e) {
+			System.out.println(e.getMessage());
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+		}
+	}
+	
 	// API Call to delete a restaurant based on the ID
 	@DeleteMapping("/delete/{id}")
 	public ResponseEntity<String> deleteRestaurant(@PathVariable int id)
