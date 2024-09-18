@@ -1,6 +1,0 @@
-package com.mealkings.InventoryManagement.entity;
-
-public class Item {
-	private int item_id;
-	private i
-}

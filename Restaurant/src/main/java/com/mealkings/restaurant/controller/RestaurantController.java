@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.mealkings.restaurant.entity.Item;
 import com.mealkings.restaurant.entity.Restaurant;
 import com.mealkings.restaurant.exceptions.IDNotFoundException;
 import com.mealkings.restaurant.service.RestaurantCRUDService;
@@ -64,6 +65,49 @@ public class RestaurantController {
 		try {
 			resService.deleteRestaurant(id);
 	        return ResponseEntity.status(HttpStatus.OK).body("Deleted Successfully!");
+		} catch (IDNotFoundException e) {
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+		}
+	}
+	
+	@GetMapping("/item/{item_id}")
+	public ResponseEntity<Item> getItem(@PathVariable int item_id){
+		try {
+			return ResponseEntity.ok(resService.getItem(item_id));
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+		}
+	}
+	
+	@PostMapping("/item/add")
+	public ResponseEntity<String> addItem(@RequestBody Item item){
+		try {
+			resService.addItem(item);
+			return ResponseEntity.status(HttpStatus.OK).body("Item added successfully!");
+		} catch (Exception e) {
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+		}
+	}
+	
+	// API call to update data based on ID
+	@PutMapping("/item/{item_id}")
+	public ResponseEntity<String> updateItem(@PathVariable int item_id, @RequestBody Item item) {
+		try {
+			resService.updateItemDetails(item_id, item);
+	        return ResponseEntity.status(HttpStatus.OK).body("Item updated successfully!");
+		} catch (Exception e) {
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+		}
+	}
+	
+	// API Call to delete a restaurant based on the ID
+	@DeleteMapping("/item/{item_id}")
+	public ResponseEntity<String> deleteItem(@PathVariable int item_id)
+	{
+		try {
+			resService.deleteItem(item_id);
+	        return ResponseEntity.status(HttpStatus.OK).body("Item deleted successfully!");
 		} catch (IDNotFoundException e) {
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
 		}

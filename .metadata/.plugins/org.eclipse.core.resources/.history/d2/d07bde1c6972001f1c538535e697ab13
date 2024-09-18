@@ -1,5 +1,0 @@
-package com.mealkings.restaurant.exceptions;
-
-public class IDNotFound {
-
-}

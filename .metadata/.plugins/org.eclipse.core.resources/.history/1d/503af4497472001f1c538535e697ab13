@@ -1,9 +1,0 @@
-package com.mealkings.restaurant.exceptions;
-
-public class DataMissingException extends Exception {
-
-	public DataMissingException(String message) {
-		super(message);
-	}
-
-}

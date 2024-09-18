@@ -3,10 +3,12 @@ package com.mealkings.restaurant.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.mealkings.restaurant.entity.Item;
 import com.mealkings.restaurant.entity.Restaurant;
 import com.mealkings.restaurant.exceptions.DataMissingException;
 import com.mealkings.restaurant.exceptions.IDMismatchException;
 import com.mealkings.restaurant.exceptions.IDNotFoundException;
+import com.mealkings.restaurant.repository.ItemRepository;
 import com.mealkings.restaurant.repository.RestaurantRepository;
 
 @Component
@@ -15,6 +17,10 @@ public class RestaurantCRUDImpl implements RestaurantCRUD {
 	// Call to the restaurant repository to access CRUD functions
 	@Autowired
 	private RestaurantRepository rrepo;
+
+	// Call to the item repository to access CRUD functions
+	@Autowired
+	private ItemRepository irepo;
 	
 	// Function to check if the string passed is empty or pointing to null
 	private boolean isNullOrEmpty(String str) {
@@ -31,6 +37,20 @@ public class RestaurantCRUDImpl implements RestaurantCRUD {
 	        return true;
 	    }
 	    return false;
+	}
+	
+	// Function to check if the item object is valid and has all the fields
+	private boolean checkNewItem (Item item) {
+	    if (item == null ||
+		    item.getItem_id() <= 0 || 
+	        item.getItem_cost() <= 0 || 
+	        item.getQuantity() < 0 || 
+	        item.getRestaurant_id() <= 0 || 
+	        isNullOrEmpty(item.getItem_name()) || 
+	        isNullOrEmpty(""+item.getCategory())) {
+	        return false;
+	    }
+	    return true;
 	}
 	
 	// Function to add a new restaurant to the database
@@ -81,4 +101,51 @@ public class RestaurantCRUDImpl implements RestaurantCRUD {
 		rrepo.delete(restaurant);
 	}
 
+	@Override
+	public void addItem(Item item) throws DataMissingException {
+		if(checkNewItem(item))
+			irepo.save(item);
+		else
+			throw new DataMissingException("Incomplete or null data!");
+	}
+
+	@Override
+	public Item getItem(int id) throws IDNotFoundException {
+		Item item = irepo.findById(id)
+	            .orElseThrow(() -> new IDNotFoundException("ID not present!"));
+		return item;
+	}
+
+	@Override
+	public void updateItemDetails(int id, Item item)
+			throws IDNotFoundException, DataMissingException, IDMismatchException {
+
+		// Retrieve the existing restaurant
+	    Item oldItem = irepo.findById(id)
+	            .orElseThrow(() -> new IDNotFoundException("ID not present!"));
+
+		
+		if(!checkNewItem(item))
+			throw new DataMissingException("Incomplete Data!");
+		
+		if(id != oldItem.getItem_id())
+			throw new IDMismatchException("ID in the url and in the message body not matching!");
+		
+		oldItem.setRestaurant_id(item.getRestaurant_id());
+		oldItem.setItem_name(item.getItem_name());
+		oldItem.setItem_cost(item.getItem_cost());
+		oldItem.setQuantity(item.getQuantity());
+		oldItem.setCategory(item.getCategory());
+		
+		irepo.save(oldItem);
+		
+	}
+
+	@Override
+	public void deleteItem(int id) throws IDNotFoundException {
+		Item item = irepo.findById(id)
+	            .orElseThrow(() -> new IDNotFoundException("ID not present!"));
+		
+		irepo.delete(item);
+	}
 }
