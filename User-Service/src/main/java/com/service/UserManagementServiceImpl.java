@@ -1,0 +1,25 @@
+package com.service;
+
+import org.springframework.beans.factory.annotation.Autowired;
+
+import com.entity.User;
+
+
+public class UserManagementServiceImpl implements UserManagementService{
+	
+	@Autowired
+	private UserService service;
+
+	@Override
+	public void placeOrderService(Long userId, Long orderId) {
+		User user = service.getUserById(userId);
+		user.setOrderId(orderId);
+	}
+//	@Override
+//	public void giveRating(Long resId,Long userId) {
+//		User user = service.getUserById(userId);
+//		user.se
+//		
+//	}
+
+}
