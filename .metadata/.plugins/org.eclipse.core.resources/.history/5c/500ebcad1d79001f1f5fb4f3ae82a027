@@ -1,0 +1,6 @@
+package com.model;
+
+public class AddItemRequest {
+    private Long itemId;   // Use Long instead of int for item IDs
+    private int quantity;
+}

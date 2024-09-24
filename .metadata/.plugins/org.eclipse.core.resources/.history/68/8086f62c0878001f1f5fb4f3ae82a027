@@ -1,0 +1,11 @@
+package com.mealkings.authentication.service;
+
+import java.util.Optional;
+
+import com.mealkings.authentication.entity.Credentials;
+import com.mealkings.authentication.entity.User;
+
+public interface UserService {
+    Credentials registerUser(Credentials user);
+   
+}

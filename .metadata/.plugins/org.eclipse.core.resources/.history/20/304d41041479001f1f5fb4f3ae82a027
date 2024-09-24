@@ -1,0 +1,78 @@
+package com.mealkings.cart.service;
+
+import com.mealkings.cart.entity.Cart;
+import com.mealkings.cart.entity.CartItem;
+import com.mealkings.cart.exceptions.CartNotFoundException;
+import com.mealkings.cart.exceptions.CartAlreadyExistsException;
+import com.mealkings.cart.repository.CartRepository;
+import com.mealkings.cart.service.CartService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+
+@Service
+public class CartImpl implements CartDAO {
+
+    @Autowired
+    private CartRepository cartRepository;
+
+    @Override
+    public Cart createCart(Cart cart) {
+
+        Cart existingCart = cartRepository.findByCustomer_CustomerId(cart.getCustomer().getCustomer_id());
+        if (existingCart != null) {
+
+            throw new CartAlreadyExistsException("Cart already exists for user ID: " + cart.getCustomer().getCustomer_id());
+        }
+
+        return cartRepository.save(cart);
+    }
+
+    @Override
+    public Cart getCartByUserId(Long userId) {
+        return cartRepository.findByCustomer_CustomerId(userId);
+    }
+
+    @Override
+    public List<Cart> getAllCarts() {
+        return cartRepository.findAll();
+    }
+
+    @Override
+    public void addItemToCart(Long userId, CartItem item) {
+        Cart cart = cartRepository.findByCustomer_CustomerId(userId);
+        if (cart == null) {
+            throw new CartNotFoundException("Cart not found for user ID: " + userId);
+        }
+
+        cart.getItems().add(item);
+        cartRepository.save(cart);
+    }
+
+    @Override
+    public void removeItemFromCart(Long userId, Long itemId) {
+        Cart cart = cartRepository.findByCustomer_CustomerId(userId);
+        if (cart == null) {
+            throw new CartNotFoundException("Cart not found for user ID: " + userId);
+        }
+
+        cart.getItems().removeIf(item -> item.getId() == itemId);
+        cartRepository.save(cart);
+    }
+
+    @Override
+    public List<CartItem> viewCartItems(Long userId) {
+        Cart cart = cartRepository.findByCustomer_Customer_Id(userId);
+        if (cart == null) {
+            throw new CartNotFoundException("Cart not found for user ID: " + userId);
+        }
+        return cart.getItems();
+    }
+
+	@Override
+	public void deleteCart(Long userId) {
+		// TODO Auto-generated method stub
+		
+	}
+}

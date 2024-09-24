@@ -1,0 +1,34 @@
+package com.mealkings.restaurant.entity;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
+import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Entity
+@Table(name = "OrderItems")
+public class OrderItems {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id; // Primary key
+
+    @ManyToOne
+    @JoinColumn(name = "order_id", nullable = false) // Foreign key referencing Order
+    @JsonBackReference(value = "order-orderitems")
+    private Order order;
+
+    @ManyToOne
+    @JoinColumn(name = "item_id", nullable = false) // Foreign key referencing Item
+    @JsonBackReference(value = "item-orderitems")
+    private Item item;
+
+    private int quantity; // Quantity of the item in the order
+    private double itemPrice; // Price per item
+    private double totalPrice; // Total price for this order item (quantity * itemPrice)
+}

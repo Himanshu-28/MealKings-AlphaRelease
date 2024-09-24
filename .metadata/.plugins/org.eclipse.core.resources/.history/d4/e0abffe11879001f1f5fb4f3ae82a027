@@ -1,0 +1,11 @@
+package com.mealkings.cart.repository;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+
+import com.mealkings.cart.entity.Cart;
+
+@Repository
+public interface ItemRepository2 extends JpaRepository<Cart, Long> {
+    Cart findByCustomer_CustomerId(Long customerId);
+}

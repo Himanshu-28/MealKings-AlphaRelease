@@ -1,0 +1,48 @@
+package com.mealkings.Order.entity;
+
+import java.sql.Timestamp;
+
+import org.hibernate.annotations.ManyToAny;
+
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
+
+@Data
+@ToString
+@NoArgsConstructor
+@AllArgsConstructor
+@Entity
+@Table(name = "Order")
+public class Order {
+	
+	@Id
+	private int order_id;
+	
+	private double totalAmount;
+	private String orderStatus;
+	private String paymentMethod;
+	private Timestamp orderDate;
+	private String deliverAddress;
+	private boolean discuntApplied;
+	private double discountAmount;
+	
+
+    @ManyToOne
+    @JoinColumn(name = "customer_id", referencedColumnName = "customer_id")
+    @JsonManagedReference
+    private Customer customer;
+    
+    @ManyToOne
+    @JoinColumn(name = "restaurantId", nullable = false)
+    @JsonManagedReference
+    private Restaurant restaurant;
+}

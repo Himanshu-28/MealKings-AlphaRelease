@@ -1,0 +1,46 @@
+package com.mealkings.authentication.entity;
+
+import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@AllArgsConstructor
+@NoArgsConstructor
+@Data
+@Entity
+@Table(name = "Customer")
+public class Customer {
+	
+    @Id
+    private long customer_id;
+    
+    @Column(nullable = false)
+    private String name;
+    
+    @Column(nullable = false, unique = true)
+    private String mobile_no;
+    
+    @Column(nullable = false)
+    private String address;
+    
+    @Column(nullable = false)
+    private String email;
+
+    @OneToOne
+    @MapsId
+    @JoinColumn(name = "customer_id", referencedColumnName = "customer_id", nullable = false)
+    private Credentials credentials;
+
+	public Customer(int customer_id, String name, String mobile_no, String address, String email) {
+		super();
+		this.customer_id = customer_id;
+		this.name = name;
+		this.mobile_no = mobile_no;
+		this.address = address;
+		this.email = email;
+	}   
+    
+    
+    
+}

@@ -1,0 +1,104 @@
+//package com.controller;
+
+//import java.util.*;
+//
+//import org.springframework.beans.factory.annotation.Autowired;
+//import org.springframework.web.bind.annotation.*;
+//
+//import com.mealkings.cart.entity.CartItems;
+//import com.mealkings.cart.service.CartService;
+//
+//
+//@RestController
+//@RequestMapping("/cart")
+//public class CartController {
+//	
+//	@Autowired
+//    CartService cartService;
+//
+//    
+//
+//    @PostMapping("/add")
+//    public void addItemToCart(@RequestBody Map<String, Object> body) {
+//        String itemName = (String) body.get("name");
+//        Integer quantity = (Integer) body.get("quantity");
+//        Long userId = Long.valueOf((Integer) body.get("user_id"));
+//        cartService.addItemToCart(itemName, quantity, userId);
+//    }
+//
+//    @GetMapping("/view/{userId}")
+//    public List<CartItems> viewAllItemsInCart(@PathVariable Long userId) {
+//        return cartService.viewAllItemsInCart(userId);
+//    }
+//
+//    @PutMapping("/update")
+//    public void updateCartItem(@RequestBody Map<String, Object> body) {
+//        Long userId = Long.valueOf((Integer) body.get("user_id"));
+//        Long itemId = Long.valueOf((Integer) body.get("item_id"));
+//        Integer quantity = (Integer) body.get("quantity");
+//        cartService.updateCartItem(userId, itemId, quantity);
+//    }
+//
+//    @DeleteMapping("/remove")
+//    public void removeItemFromCart(@RequestBody Map<String, Object> body) {
+//        Long userId = Long.valueOf((Integer) body.get("user_id"));
+//        Long itemId = Long.valueOf((Integer) body.get("item_id"));
+//        cartService.removeItemFromCart(userId, itemId);
+//    }
+//    
+// // API to delete cart and its items by userId
+//    @DeleteMapping("/delete/{userId}")
+//    public void deleteCartByUserId(@PathVariable Long userId) {
+//        cartService.deleteCartByUserId(userId); // Use cartService instance, not CartService class
+//    }
+//
+//}
+package com.controller;
+
+import com.mealkings.cart.entity.Cart;
+import com.mealkings.cart.entity.CartItem;
+import com.mealkings.cart.entity.Item;
+import com.mealkings.cart.service.CartImpl;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+
+@RestController
+@RequestMapping("/cart")
+public class CartController {
+
+    @Autowired
+    private CartImpl cartService;
+
+    @PostMapping("/{customerId}")
+    public ResponseEntity<Cart> createCart(@PathVariable Long customerId, @RequestBody Cart cart) {
+        Cart createdCart = cartService.createCart(customerId, cart);
+        return ResponseEntity.ok(createdCart);
+    }
+
+    @GetMapping("/{customerId}")
+    public ResponseEntity<Cart> getCartByUserId(@PathVariable Long customerId) {
+        Cart cart = cartService.getCartByUserId(customerId);
+        return ResponseEntity.ok(cart);
+    }
+
+    @GetMapping("/{customerId}/items")
+    public ResponseEntity<List<CartItem>> viewCartItems(@PathVariable Long customerId) {
+        List<CartItem> items = cartService.viewCartItems(customerId);
+        return ResponseEntity.ok(items);
+    }
+
+    @PostMapping("/{customerId}/items")
+    public ResponseEntity<Void> addItemToCart(@PathVariable Long customerId, @RequestBody int item_id, @RequestBody int quantity) {
+        cartService.addItemToCart(customerId, item_id, quantity);
+        return ResponseEntity.ok().build();
+    }
+
+    @DeleteMapping("/{customerId}/items/{itemId}")
+    public ResponseEntity<Void> removeItemFromCart(@PathVariable Long customerId, @PathVariable Long itemId) {
+        cartService.removeItemFromCart(customerId, itemId);
+        return ResponseEntity.ok().build();
+    }
+}

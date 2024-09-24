@@ -1,0 +1,70 @@
+package com.mealkings.Order.entity;
+
+import java.sql.Timestamp;
+import java.util.List;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
+
+@Data
+@ToString
+@NoArgsConstructor
+@Entity
+@Table(name = "Orders")
+public class Order {
+	
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private long order_id;
+	
+	private double totalAmount;
+	private String orderStatus;
+	private String paymentMethod;
+	private Timestamp orderDate;
+	private String deliverAddress;
+	private boolean discountApplied ;
+	private double discountAmount;
+	
+
+    @ManyToOne
+    @JoinColumn(name = "customer_id", referencedColumnName = "customer_id")
+    @JsonBackReference(value = "customer-order")
+    private Customer customer;
+    
+    @ManyToOne
+    @JoinColumn(name = "restaurantId", nullable = false)
+    @JsonBackReference(value = "restaurant-order")
+    private Restaurant restaurant;
+    
+    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference
+    private List<OrderItems> orderItems;
+
+	public Order(double totalAmount, String orderStatus, String paymentMethod, Timestamp orderDate,
+			String deliverAddress, boolean discountApplied, double discountAmount) {
+		super();
+		this.totalAmount = totalAmount;
+		this.orderStatus = orderStatus;
+		this.paymentMethod = paymentMethod;
+		this.orderDate = orderDate;
+		this.deliverAddress = deliverAddress;
+		this.discountApplied = discountApplied;
+		this.discountAmount = discountAmount;
+	}
+
+	
+    
+}

@@ -1,0 +1,8 @@
+package com.mealkings.authentication.service;
+
+import com.mealkings.authentication.entity.Credentials;
+
+public interface UserService {
+    Credentials registerUser(Credentials user);
+   
+}

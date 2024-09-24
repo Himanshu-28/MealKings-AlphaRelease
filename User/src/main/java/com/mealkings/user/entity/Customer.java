@@ -1,0 +1,59 @@
+package com.mealkings.user.entity;
+
+import java.util.List;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
+import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@AllArgsConstructor
+@NoArgsConstructor
+@Data
+@Entity
+@Table(name = "Customer")
+public class Customer {
+	
+    @Id
+    @Column(name = "customer_id")
+    private long customerId;
+    
+    @Column(nullable = false)
+    private String name;
+    
+    @Column(nullable = false, unique = true)
+    private String mobileNo;
+    
+    @Column(nullable = false)
+    private String address;
+    
+    @Column(nullable = false)
+    private String email;
+
+    @OneToOne
+    @MapsId
+    @JoinColumn(name = "customer_id", referencedColumnName = "customer_id", nullable = false)
+    @JsonManagedReference(value = "customer-creds")
+    private Credentials credentials;
+    
+    @OneToOne(mappedBy = "customer", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JsonBackReference(value = "customer-cart")
+    private Cart cart;
+    
+    @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL)
+    @JsonManagedReference(value = "customer-order")
+    private List<Order> order;
+
+	public Customer(String name, String mobile_no, String address, String email, Credentials credentials) {
+		super();
+		this.name = name;
+		this.mobileNo = mobile_no;
+		this.address = address;
+		this.email = email;
+		this.credentials = credentials;
+	}
+    
+}

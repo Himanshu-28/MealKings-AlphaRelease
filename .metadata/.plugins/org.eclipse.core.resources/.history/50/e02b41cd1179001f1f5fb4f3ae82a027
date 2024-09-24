@@ -1,0 +1,42 @@
+package com.mealkings.restaurant.entity;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
+import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@NoArgsConstructor
+@Data
+@Entity
+@Table(name = "MenuItems")
+public class Item {
+    
+    @Id
+    @GeneratedValue
+    private int itemId;
+    
+    private String itemName;
+    private String description;
+    private int item_cost;
+    private int quantity;
+    private char category;
+
+    // Foreign key to Restaurant
+    @ManyToOne
+    @JoinColumn(name = "restaurant_id", nullable = false)
+    @JsonBackReference
+    private Restaurant restaurant; // This will be the restaurant that owns this item
+
+	public Item(String item_name, String description, int item_cost, int quantity, char category) {
+		super();
+		this.item_name = item_name;
+		this.description = description;
+		this.item_cost = item_cost;
+		this.quantity = quantity;
+		this.category = category;
+	}
+    
+    
+}

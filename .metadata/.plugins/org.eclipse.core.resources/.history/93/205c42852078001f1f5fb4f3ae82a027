@@ -1,0 +1,13 @@
+package com.mealkings.authentication.repository;
+
+import java.util.Optional;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+
+import com.mealkings.authentication.entity.Credentials;
+import com.mealkings.authentication.entity.Restaurant_Owner;
+
+@Repository
+public interface RestaurantRepository extends JpaRepository<Restaurant_Owner, Long> {
+}

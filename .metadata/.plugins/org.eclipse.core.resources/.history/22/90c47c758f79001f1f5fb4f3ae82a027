@@ -1,0 +1,9 @@
+package com.mealkings.Order.model;
+
+import com.mealkings.Order.entity.Order;
+
+public class NewOrderParams {
+	public Order order;
+	public long customer_id;
+	public long restaurant_id;
+}

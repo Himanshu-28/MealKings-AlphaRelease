@@ -1,0 +1,5 @@
+package commealkings.cart.service;
+
+public interface CartDAO {
+
+}

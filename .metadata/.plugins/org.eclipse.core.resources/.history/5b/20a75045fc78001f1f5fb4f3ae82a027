@@ -1,0 +1,25 @@
+spring.application.name=
+# ===============================
+# = SPRING APPLICATION PROPERTIES
+# ===============================
+spring.application.name=Discount
+server.port=8081
+spring.main.allow-bean-definition-overriding=true
+# ===============================
+# = DATA SOURCE
+# ===============================
+# Configurations for the database connection
+spring.datasource.url=jdbc:mysql://localhost:3306/mealkings
+spring.datasource.username=root
+spring.datasource.password=root
+spring.jpa.hibernate.ddl-auto=update
+spring.datasource.driver-class-name=com.mysql.cj.jdbc.Driver
+# ===============================
+# = EUREKA CLIENT PROPERTIES
+# ===============================
+eureka.client.serviceUrl.defaultZone=http://localhost:7777/eureka/
+# ===============================
+# = MISCELL PROPERTIES
+# ===============================
+management.endpoints.web.exposure.include=*
+management.security.enabled=true

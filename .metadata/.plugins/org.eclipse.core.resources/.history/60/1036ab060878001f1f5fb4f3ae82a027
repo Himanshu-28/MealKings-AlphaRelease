@@ -1,0 +1,8 @@
+package com.mealkings.authentication.exceptions;
+
+public class UserNotFoundException extends RuntimeException {
+	    public UserNotFoundException(String message) {
+	        super("USER NOT FOUND");
+	    }
+	}
+

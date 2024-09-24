@@ -1,0 +1,9 @@
+INDEX VERSION 1.134+C:\Users\Administrator\Documents\MealKings-AlphaRelease\.metadata\.plugins\org.eclipse.jdt.core
+2335470964.index
+4275341011.index
+1776165370.index
+2970889538.index
+41218485.index
+925135804.index
+1865797976.index
+266055677.index

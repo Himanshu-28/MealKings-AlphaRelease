@@ -1,0 +1,6 @@
+package com.mealkings.Order.model;
+
+public class NewOrderParams {
+	public Order order;
+	public int 
+}

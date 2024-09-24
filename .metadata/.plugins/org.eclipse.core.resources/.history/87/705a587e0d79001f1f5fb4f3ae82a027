@@ -1,0 +1,21 @@
+package com.mealkings.cart.service;
+
+import com.mealkings.cart.entity.Cart;
+import com.mealkings.cart.entity.CartItem;
+
+import java.util.List;
+
+public interface CartDAO {
+    
+    Cart createCart(Cart cart);
+    
+    Cart getCartByUserId(Long userId);
+    
+    List<Cart> getAllCarts();
+    
+    void addItemToCart(Long userId, CartItem item); // New method for adding items
+    void removeItemFromCart(Long userId, Long itemId); // New method for removing items
+    List<CartItem> viewCartItems(Long userId);
+    
+    void deleteCart(Long userId);
+}

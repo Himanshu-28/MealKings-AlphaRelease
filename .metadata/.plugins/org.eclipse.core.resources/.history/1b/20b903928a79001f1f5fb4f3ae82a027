@@ -1,0 +1,5 @@
+package com.mealkings.Order.entity;
+
+public class OrderItems {
+
+}

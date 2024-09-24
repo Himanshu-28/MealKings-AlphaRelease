@@ -1,0 +1,23 @@
+package com.mealkings.authentication.entity;
+
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
+
+@AllArgsConstructor
+@NoArgsConstructor
+@ToString
+@Data
+@Entity
+@Table(name = "")
+public class Customer {
+	@Id
+	private int user_id;
+	private String name;
+	private String mobile_no;
+	private String address;
+}

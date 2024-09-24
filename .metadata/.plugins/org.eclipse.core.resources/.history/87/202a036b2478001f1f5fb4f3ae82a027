@@ -1,0 +1,8 @@
+# ===============================
+# = SPRING APPLICATION PROPERTIES
+# ===============================
+spring.application.name=AppRegistry
+server.port=7777
+eureka.instance.hostname=localhost
+eureka.client.registerWithEureka=false
+erueka.client.fetchRegistry=false

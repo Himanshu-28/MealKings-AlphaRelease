@@ -1,0 +1,55 @@
+package com.mealkings.restaurant.entity;
+
+import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+import java.util.List;
+
+@AllArgsConstructor
+@NoArgsConstructor
+@Data
+@Entity
+@Table(name = "Restaurant")
+public class Restaurant {
+    
+    @Id
+    private long restaurant_id;
+    
+    @Column(nullable = false)
+    private String name;
+    
+    @Column(nullable = false, unique = true)
+    private String mobile_no;
+    
+    @Column(nullable = false)
+    private String address;
+    
+    @Column(nullable = false)
+    private byte ratings;
+    
+    @Column(nullable = false)
+    private boolean isActive;
+
+    @OneToOne
+    @MapsId
+    @JoinColumn(name = "restaurant_id", referencedColumnName = "restaurant_id", nullable = false)
+    private Credentials credentials;
+
+    // One restaurant can have many items
+    @OneToMany(mappedBy = "restaurant", cascade = CascadeType.ALL)
+    
+    private List<Item> items; // This will hold all the items related to the restaurant
+
+    public Restaurant(String name, String mobile_no, String address, byte ratings, boolean isActive,
+                      Credentials credentials) {
+        super();
+        this.name = name;
+        this.mobile_no = mobile_no;
+        this.address = address;
+        this.ratings = ratings;
+        this.isActive = isActive;
+        this.credentials = credentials;
+    }
+}

@@ -1,0 +1,5 @@
+package com.mealkings.cart.exceptions;
+
+public class CartAlreadyExistsException {
+
+}

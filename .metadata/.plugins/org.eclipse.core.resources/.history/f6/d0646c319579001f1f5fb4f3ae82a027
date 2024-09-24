@@ -1,0 +1,16 @@
+package com.mealkings.Order.model;
+
+import com.mealkings.Order.entity.Order;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+public class NewOrderParams {
+	public Order order;
+	public long customer_id;
+	public long restaurant_id;
+}

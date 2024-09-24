@@ -1,0 +1,5 @@
+package com.mealkings.authentication.entity;
+
+public class Restaurant_Owner {
+
+}

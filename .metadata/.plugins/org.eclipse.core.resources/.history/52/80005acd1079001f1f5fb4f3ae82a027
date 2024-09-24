@@ -1,0 +1,36 @@
+spring.application.name=restaurant-cart-service
+
+spring.cloud.config.enabled=false
+server.port=8032
+spring.datasource.url=jdbc:mysql://localhost:3306/restaurantcartservice
+spring.datasource.username=root
+spring.datasource.password=root
+spring.jpa.hibernate.ddl-auto=update
+spring.main.allow-bean-definition-overriding=true
+eureka.client.register-with-eureka=false
+eureka.client.fetch-registry=false
+
+# ===============================
+# = SPRING APPLICATION PROPERTIES
+# ===============================
+spring.application.name=Restaurant
+server.port=8081
+spring.main.allow-bean-definition-overriding=true
+# ===============================
+# = DATA SOURCE
+# ===============================
+# Configurations for the database connection
+spring.datasource.url=jdbc:mysql://localhost:3306/mealkings
+spring.datasource.username=root
+spring.datasource.password=root
+spring.jpa.hibernate.ddl-auto=update
+spring.datasource.driver-class-name=com.mysql.cj.jdbc.Driver
+# ===============================
+# = EUREKA CLIENT PROPERTIES
+# ===============================
+#eureka.client.serviceUrl.defaultZone=http://localhost:7777/eureka/
+# ===============================
+# = MISCELL PROPERTIES
+# ===============================
+management.endpoints.web.exposure.include=*
+management.security.enabled=true

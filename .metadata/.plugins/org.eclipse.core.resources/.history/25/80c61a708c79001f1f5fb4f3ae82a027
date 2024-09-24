@@ -1,0 +1,94 @@
+package com.mealkings.Order.service;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
+import com.mealkings.Order.entity.Customer;
+import com.mealkings.Order.entity.Order;
+import com.mealkings.Order.repository.CustomerRepository;
+import com.mealkings.Order.repository.OrderRepository;
+import com.mealkings.Order.exceptions.IDNotFoundException;
+
+@Component
+public class OrderOpsImpl implements OrderOps {
+	
+	@Autowired
+	private OrderRepository orepo;	
+	
+	@Autowired
+	private CustomerRepository crepo;	
+
+	@Override
+	public List<Order> getActiveOrderByRestaurant(int restaurant_id) {
+		
+		Iterable<Order> allOrders = orepo.findAll();
+		List<Order> activeOrders = new ArrayList<Order>();
+		
+		for(Order order:allOrders)
+			if((order.getRestaurant().getRestaurantId() == restaurant_id) && (order.getOrderStatus().equalsIgnoreCase("active")))
+				activeOrders.add(order);
+		
+		return activeOrders;
+	}
+
+	@Override
+	public List<Order> getPastOrderByRestaurant(int restaurant_id) {
+
+		Iterable<Order> allOrders = orepo.findAll();
+		List<Order> pastOrders = new ArrayList<Order>();
+		
+		for(Order order:allOrders)
+			if((order.getRestaurant().getRestaurantId() == restaurant_id) && !(order.getOrderStatus().equalsIgnoreCase("active")))
+				pastOrders.add(order);
+		
+		return pastOrders;
+	}
+
+	@Override
+	public void updateOrderStatus(int order_id, String status) throws IDNotFoundException {
+		Order order = orepo.findById(order_id)
+	            .orElseThrow(() -> new IDNotFoundException("Order either inactive or not present!"));
+		order.setOrderStatus(status);
+
+		orepo.save(order);
+	}
+
+	@Override
+	public List<Order> getActiveOrderByUser(int user_id) {
+		Iterable<Order> allOrders = orepo.findAll();
+		List<Order> pastOrders = new ArrayList<Order>();
+		
+		for(Order order:allOrders)
+			if((order.getCustomer() == user_id) && (order.getOrderStatus().equalsIgnoreCase("active")))
+				pastOrders.add(order);
+		
+		return pastOrders;
+	}
+
+	@Override
+	public List<Order> getPastOrderByUser(int user_id) {
+		Iterable<Order> allOrders = orepo.findAll();
+		List<Order> activeOrders = new ArrayList<Order>();
+		
+		for(Order order:allOrders)
+			if((order.getUser_id() == user_id) && !(order.getOrderStatus().equalsIgnoreCase("active")))
+				activeOrders.add(order);
+		
+		return activeOrders;
+	}
+
+	@Override
+	public void addOrder(int customer_id, int restaurant_id, Order order) {
+		Customer customer - crepo.findById(customer_id);
+	}
+
+	@Override
+	public void cancelOrder(int order_id) throws IDNotFoundException {
+		// TODO Auto-generated method stub
+		
+	}
+
+}

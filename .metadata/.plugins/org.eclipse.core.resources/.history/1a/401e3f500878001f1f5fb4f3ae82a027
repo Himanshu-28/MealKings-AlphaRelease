@@ -1,0 +1,5 @@
+package com.mealkings.authentication.model;
+
+public class User {
+
+}

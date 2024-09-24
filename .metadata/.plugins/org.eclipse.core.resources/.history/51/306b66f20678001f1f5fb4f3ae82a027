@@ -1,0 +1,7 @@
+package com.mealkings.authentication.entity;
+
+public class Customer {
+	
+	private int user_id;
+	
+}

@@ -1,0 +1,5 @@
+package com.mealkings.Order.model;
+
+public class NewOrderParams {
+	
+}

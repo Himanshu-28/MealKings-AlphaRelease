@@ -1,0 +1,54 @@
+package com.mealkings.user.service;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.mealkings.user.entity.Customer;
+import com.mealkings.user.exceptions.UserAlreadyExistsException;
+import com.mealkings.user.exceptions.UserNotFoundException;
+import com.mealkings.user.repository.UserRepository;
+
+@Service
+public class UserServiceImpl implements UserService{
+
+	  @Autowired
+	    private UserRepository userRepository;
+
+	    // Create
+	    public Customer createUser(Customer user) {
+	        if (userRepository.findById(user.getCustomer_id()).isPresent()) {
+	            throw new UserAlreadyExistsException(user.getEmail());
+	        }
+	        return userRepository.save(user);
+	    }
+
+	    // Read
+	    public List<Customer> getAllUsers() {
+	        return userRepository.findAll();
+	    }
+
+	    public Customer getUserById(Long id) {
+	        return userRepository.findById(id)
+	                             .orElseThrow(() -> new UserNotFoundException(id));
+	    }
+
+	    // Update
+	    public User updateUser(Long id, User userDetails) {
+	        if (!userRepository.existsById(id)) {
+	            throw new UserNotFoundException(id);
+	        }
+	        userDetails.setUserId(id);
+	        return userRepository.save(userDetails);
+	    }
+
+	    // Delete
+	    public void deleteUser(Long id) {
+	        if (!userRepository.existsById(id)) {
+	            throw new UserNotFoundException(id);
+	        }
+	        userRepository.deleteById(id);
+	    }
+
+}

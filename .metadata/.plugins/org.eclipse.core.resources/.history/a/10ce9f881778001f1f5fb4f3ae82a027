@@ -1,0 +1,46 @@
+package com.mealkings.authentication.service;
+
+import java.util.*;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.stereotype.Service;
+
+import com.mealkings.authentication.entity.Credentials;
+import com.mealkings.authentication.model.User;
+import com.mealkings.authentication.repository.UserRepository;
+
+@Service
+public class UserServiceImpl implements UserService {
+
+    @Autowired
+    private UserRepository userRepository;
+    
+    @Autowired
+    private BCryptPasswordEncoder passwordEncoder;
+    
+    private boolean checkRole(String role) {
+    	if(role.equalsIgnoreCase("CUSTOMER") || role.equalsIgnoreCase("RESTAURANT_OWNER"))
+    		return true;
+    	return false;
+    }
+    
+    private boolean checkUser(User user) {
+    	List<Credentials> creds = userRepository.findAll();
+    	
+    	for(Credentials cred: creds)
+    		if(cred.getEmail().equals(user.getEmail()) || cred.getUsername().equals(user.getUser_Name()))
+    			return false;
+    	return true;
+    }
+
+    @Override
+    public Credentials registerUser(User user) {
+    	if(checkUser(user) && checkRole(user.getRole())) {
+    		Credentials newUser = new Credentials(user.getUser_Name(), user.getEmail(), user.getPassword(), user.getRole());
+
+    		return userRepository.save(newUser);
+    	}
+    	return null;
+    }
+}

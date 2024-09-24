@@ -1,0 +1,104 @@
+//package com.entity;
+//
+//import com.fasterxml.jackson.annotation.JsonManagedReference;
+//import jakarta.persistence.*;
+//import lombok.Data;
+//import lombok.NoArgsConstructor;
+//import lombok.ToString;
+//
+//import java.util.ArrayList;
+//import java.util.List;
+//
+//@NoArgsConstructor
+//@Data
+//@ToString
+//@Entity
+//@Table(name = "Cart")
+//public class Cart {
+//    @Id
+//    @GeneratedValue(strategy = GenerationType.IDENTITY)
+//    private Long cartId;
+//
+//    private Long restaurantId;
+//    private Long userId;
+//
+//    @OneToMany(mappedBy = "cart", cascade = CascadeType.ALL, orphanRemoval = true)
+//    @JsonManagedReference
+//    private List<CartItems> cartItems = new ArrayList<>();
+//
+//    // Constructors, Getters, Setters
+//    public Cart(Long restaurantId, Long userId) {
+//        this.restaurantId = restaurantId;
+//        this.userId = userId;
+//    }
+//
+//    public Long getCartId() {
+//        return cartId;
+//    }
+//
+//    public void setCartId(Long cartId) {
+//        this.cartId = cartId;
+//    }
+//
+//    public Long getRestaurantId() {
+//        return restaurantId;
+//    }
+//
+//    public void setRestaurantId(Long restaurantId) {
+//        this.restaurantId = restaurantId;
+//    }
+//
+//    public Long getUserId() {
+//        return userId;
+//    }
+//
+//    public void setUserId(Long userId) {
+//        this.userId = userId;
+//    }
+//
+//    public List<CartItems> getCartItems() {
+//        return cartItems;
+//    }
+//
+//    public void setCartItems(List<CartItems> cartItems) {
+//        this.cartItems = cartItems;
+//    }
+//
+//    public Cart() {}
+//}
+
+package com.mealkings.cart.entity;
+
+import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+import java.util.List;
+
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
+@Data
+@NoArgsConstructor
+@Entity
+@Table(name = "Cart")
+public class Cart {
+    
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long cart_id;
+
+    @OneToOne
+    @JoinColumn(name = "restaurant_id", nullable = false)
+    @JsonManagedReference
+    private Restaurant restaurant;
+
+    @OneToOne
+    @JoinColumn(name = "user_id", nullable = false)
+    @JsonManagedReference
+    private Customer user;
+
+    @OneToMany(mappedBy = "cart", cascade = CascadeType.ALL)
+    private List<CartItem> items; // List of CartItems associated with this cart
+}
+
