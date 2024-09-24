@@ -1,0 +1,87 @@
+/* custom.css style sheet */
+
+body {
+    display: flex;
+    flex-direction: column; 
+    min-height: 100vh; 
+    margin: 0; 
+    background-color: #FFF5E1; 
+    color: #0C1844; 
+    font-family: Arial, sans-serif; 
+}
+
+h1, h2 {
+    color: #C80036; 
+    text-align: center; 
+}
+
+.btn-custom {
+    background-color: #FF6969; 
+    color: white; 
+    border: none; 
+}
+
+.btn-custom:hover {
+    background-color: #C80036; 
+}
+
+.card {
+    border: 1px solid #C80036; 
+    border-radius: 8px; 
+    transition: transform 0.3s; 
+    margin-bottom: 1rem; 
+}
+
+
+
+.card-header {
+    background-color: #FF6969; 
+    color: white; 
+    font-weight: bold; 
+    text-align: center; 
+}
+
+.list-group-item {
+    background-color: #FFF5E1; 
+    border: 1px solid #C80036; 
+    border-radius: 5px; 
+    margin-bottom: 10px; 
+}
+
+.list-group-item span {
+    font-weight: bold; 
+}
+
+.mt-4 {
+    margin-top: 2rem; 
+}
+
+.container {
+    flex: 1; 
+    max-width: 1200px; 
+}
+
+.footer {
+    text-align: center;
+    padding: 1rem;
+    background-color: #0e0d0d; 
+    color: white; 
+    width: 100%; 
+}
+
+.footer span {
+    font-size: 0.9rem; 
+}
+
+.btn-secondary {
+    background-color: #C80036; 
+    color: white; 
+}
+
+.btn-secondary:hover {
+    background-color: #FF6969; 
+}
+
+.card {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
+}

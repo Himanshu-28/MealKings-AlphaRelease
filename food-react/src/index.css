@@ -1,0 +1,67 @@
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f8f9fa;
+  margin: 5px;
+  padding: 10px 10px 10px 10px;
+}
+
+h1 {
+  color: #333;
+}
+
+.navbar-brand {
+  font-weight: bold;
+}
+
+.card {
+  border-radius: 8px;
+}
+
+button {
+  margin-top: 1em;
+}
+.App {
+  font-family: Arial, sans-serif;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.restaurant-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.restaurant-card {
+  border: 1px solid #ccc;
+  padding: 15px;
+  border-radius: 8px;
+  width: 200px;
+}
+
+h2 {
+  margin-bottom: 20px;
+}
+
+main {
+  flex-grow: 1; /* This makes the main content expand to fill available space */
+}
+
+.footer {
+ 
+  text-align: center;
+  /* padding: 1rem; */
+}
+.offcanvas-slide {
+  transition: transform 0.4s ease-in-out;
+}
+
+.offcanvas-slide.show {
+  transform: translateX(0);
+}
+
+.offcanvas-slide:not(.show) {
+  transform: translateX(100%);
+}
