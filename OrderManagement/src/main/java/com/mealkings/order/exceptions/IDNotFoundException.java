@@ -1,4 +1,4 @@
-package com.mealkings.Order.exceptions;
+package com.mealkings.order.exceptions;
 
 public class IDNotFoundException extends Exception {
 

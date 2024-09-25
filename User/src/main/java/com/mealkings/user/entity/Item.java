@@ -3,6 +3,7 @@ package com.mealkings.user.entity;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import jakarta.persistence.*;
@@ -34,6 +35,7 @@ public class Item {
     // List of CartItems associated with this item (optional)
     @OneToMany(mappedBy = "item")
     @JsonManagedReference(value = "item-cartitems")
+    @JsonIgnore
     private List<CartItem> cartItems;
 
 	public Item(String item_name, String description, int item_cost, int quantity, char category) {

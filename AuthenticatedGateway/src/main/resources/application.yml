@@ -1,0 +1,46 @@
+---
+spring:
+  application:
+    name: Gateway
+  cloud:
+    gateway:
+      routes:
+        - id: restaurant
+          predicates:
+            - Path=/restaurant/**
+          uri: http://localhost:8082
+  datasource:
+    url: jdbc:mysql://localhost:3306/mealkings
+    username: root
+    password: root
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+  main:
+    web-application-type: reactive
+    allow-bean-definition-overriding: true
+  thymeleaf:
+    prefix: classpath:/templates/
+    suffix: .html
+    mode: HTML
+logging:
+  level:
+    org.springframework.security: DEBUG
+server:
+  port: 8888
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:7777/eureka/
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  security:
+    enabled: true

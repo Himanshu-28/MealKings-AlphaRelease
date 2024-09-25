@@ -1,4 +1,4 @@
-package com.mealkings.Order.entity;
+package com.mealkings.order.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 

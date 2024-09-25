@@ -1,6 +1,6 @@
 package com.mealkings.user.exceptions;
 
-public class UserAlreadyExistsException extends RuntimeException {
+public class UserAlreadyExistsException extends Exception {
     /**
 	 * 
 	 */

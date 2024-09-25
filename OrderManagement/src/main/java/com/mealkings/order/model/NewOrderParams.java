@@ -1,6 +1,6 @@
-package com.mealkings.Order.model;
+package com.mealkings.order.model;
 
-import com.mealkings.Order.entity.Order;
+import com.mealkings.order.entity.Order;
 
 import lombok.Data;
 

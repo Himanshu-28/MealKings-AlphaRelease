@@ -1,4 +1,4 @@
-package com.mealkings.Order.main;
+package com.mealkings.order.main;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

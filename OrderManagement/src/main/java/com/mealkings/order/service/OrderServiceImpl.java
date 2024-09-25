@@ -1,12 +1,12 @@
-package com.mealkings.Order.service;
+package com.mealkings.order.service;
 
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.mealkings.Order.entity.Order;
-import com.mealkings.Order.exceptions.IDNotFoundException;
+import com.mealkings.order.entity.Order;
+import com.mealkings.order.exceptions.IDNotFoundException;
 
 @Service
 public class OrderServiceImpl implements OrderService {

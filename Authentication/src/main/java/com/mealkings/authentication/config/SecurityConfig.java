@@ -31,20 +31,45 @@ public class SecurityConfig {
     }
 
     @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+    public SecurityFilterChain securityFilterChain1(HttpSecurity http) throws Exception {
         http
             .authorizeHttpRequests(auth -> auth
-                .requestMatchers("/users/register").permitAll()
-                .anyRequest().authenticated())
+							                .requestMatchers("/users/register").permitAll()
+							                .anyRequest().authenticated())
             .csrf(csrf -> csrf
-                .ignoringRequestMatchers("/users/register"))
+            				.ignoringRequestMatchers("/users/register"))
             .formLogin(formLogin -> formLogin
-                .defaultSuccessUrl("/users/success", true))
+            							.defaultSuccessUrl("/users/success", true))
             .logout(logout -> logout
-                .logoutRequestMatcher(new AntPathRequestMatcher("/logout")))
+            					.logoutRequestMatcher(new AntPathRequestMatcher("/logout")))
             .exceptionHandling(eh -> eh
-                .accessDeniedPage("/ad"));
+            						.accessDeniedPage("/ad"));
 
         return http.build();
     }
+    
+//    @Bean
+//    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+//        http
+//            .authorizeHttpRequests(auth -> auth
+//                .requestMatchers("/users/").permitAll() // Public access
+//                .requestMatchers("/customer/**").hasAuthority("Customer") // Customer role required
+//                .requestMatchers("/restaurant/**").hasAuthority("Restaurant") // Restaurant role required
+//                .requestMatchers("/admin/**").hasAuthority("Admin") // Administrator role required
+//                .anyRequest().authenticated() // All other requests require authentication
+//            )
+//            .csrf(csrf -> csrf
+//                .ignoringRequestMatchers("/users/**")) // CSRF protection is ignored for public endpoints
+//            .formLogin(formLogin -> formLogin
+//                .defaultSuccessUrl("/success", true) // Redirect to dashboard after login
+//            )
+//            .logout(logout -> logout
+//                .logoutUrl("/logout") // URL for logging out
+//                .logoutSuccessUrl("/login") // Redirect after logout
+//            )
+//            .exceptionHandling(eh -> eh
+//                .accessDeniedPage("/ad")); // Custom access denied page
+//
+//        return http.build();
+//    }
 }

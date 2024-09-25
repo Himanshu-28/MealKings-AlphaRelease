@@ -1,4 +1,4 @@
-package com.mealkings.Order.entity;
+package com.mealkings.order.entity;
 
 import java.sql.Timestamp;
 import java.util.List;

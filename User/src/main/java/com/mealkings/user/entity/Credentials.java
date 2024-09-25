@@ -5,10 +5,12 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 @Data
 @NoArgsConstructor
 @Entity
+@ToString
 @Table(name = "Credentials")
 public class Credentials {
 	

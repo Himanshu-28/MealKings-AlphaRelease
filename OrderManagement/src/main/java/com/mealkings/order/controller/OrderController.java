@@ -1,4 +1,4 @@
-package com.mealkings.Order.controller;
+package com.mealkings.order.controller;
 
 import java.util.List;
 
@@ -13,10 +13,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.mealkings.Order.entity.Order;
-import com.mealkings.Order.exceptions.IDNotFoundException;
-import com.mealkings.Order.model.NewOrderParams;
-import com.mealkings.Order.service.OrderService;
+import com.mealkings.order.entity.Order;
+import com.mealkings.order.exceptions.IDNotFoundException;
+import com.mealkings.order.model.NewOrderParams;
+import com.mealkings.order.service.OrderService;
 
 @RestController
 @RequestMapping("/order")

@@ -1,12 +1,12 @@
 package com.mealkings.user.exceptions;
 
-public class UserNotFoundException extends RuntimeException {
+public class UserNotFoundException extends Exception {
     /**
 	 * 
 	 */
 	private static final long serialVersionUID = -7538680790518417818L;
 
-	public UserNotFoundException(Long id) {
-        super("User with ID " + id + " not found.");
+	public UserNotFoundException(String message) {
+        super(message);
     }
 }

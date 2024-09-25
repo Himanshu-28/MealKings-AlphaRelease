@@ -1,0 +1,18 @@
+package com.mealkings.authentication.model;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+public class User {
+    private String userName;  // Changed to camelCase
+    private String name;      // New field for Name
+    private String email;
+    private String password;
+    private String mobileNo;  // New field for Mobile Number
+    private String address;    // New field for Address
+    private String role;
+}

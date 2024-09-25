@@ -1,4 +1,4 @@
-package com.mealkings.Order.service;
+package com.mealkings.order.service;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
@@ -7,16 +7,16 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.mealkings.Order.entity.Cart;
-import com.mealkings.Order.entity.CartItem;
-import com.mealkings.Order.entity.Customer;
-import com.mealkings.Order.entity.Order;
-import com.mealkings.Order.entity.Restaurant;
-import com.mealkings.Order.repository.CartRepository;
-import com.mealkings.Order.repository.CustomerRepository;
-import com.mealkings.Order.repository.OrderRepository;
-import com.mealkings.Order.repository.RestaurantRepository;
-import com.mealkings.Order.exceptions.IDNotFoundException;
+import com.mealkings.order.entity.Cart;
+import com.mealkings.order.entity.CartItem;
+import com.mealkings.order.entity.Customer;
+import com.mealkings.order.entity.Order;
+import com.mealkings.order.entity.Restaurant;
+import com.mealkings.order.repository.CartRepository;
+import com.mealkings.order.repository.CustomerRepository;
+import com.mealkings.order.repository.OrderRepository;
+import com.mealkings.order.repository.RestaurantRepository;
+import com.mealkings.order.exceptions.IDNotFoundException;
 
 @Component
 public class OrderOpsImpl implements OrderOps {

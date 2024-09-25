@@ -11,6 +11,7 @@ import com.mealkings.restaurant.entity.Restaurant;
 import com.mealkings.restaurant.exceptions.DataMissingException;
 import com.mealkings.restaurant.exceptions.IDMismatchException;
 import com.mealkings.restaurant.exceptions.IDNotFoundException;
+import com.mealkings.restaurant.repository.CredentialsRepository;
 import com.mealkings.restaurant.repository.ItemRepository;
 import com.mealkings.restaurant.repository.RestaurantRepository;
 
@@ -25,6 +26,10 @@ public class RestaurantCRUDImpl implements RestaurantCRUD {
 	@Autowired
 	private ItemRepository irepo;
 	
+	// Call to the Credential repository to access CRUD functions
+	@Autowired
+	private CredentialsRepository crepo;
+	
 	// Function to check if the string passed is empty or pointing to null
 	private boolean isNullOrEmpty(String str) {
 	    return str == null || str.isEmpty();
@@ -38,9 +43,9 @@ public class RestaurantCRUDImpl implements RestaurantCRUD {
 	        isNullOrEmpty(restaurant.getName()) || 
 	        isNullOrEmpty(restaurant.getMobileNo()) ||
 	        isNullOrEmpty(restaurant.getAddress())) {
-	        return true;
+	        return false;
 	    }
-	    return false;
+	    return true;
 	}
 	
 	// Function to check if the item object is valid and has all the fields
@@ -60,7 +65,7 @@ public class RestaurantCRUDImpl implements RestaurantCRUD {
 	@Override
 	public void addRestaurant(Restaurant restaurant) throws DataMissingException {
 		
-		if(checkNewRestaurant(restaurant))
+		if(!checkNewRestaurant(restaurant))
 			rrepo.save(restaurant);
 		else
 			throw new DataMissingException("Incomplete or null data!");
@@ -82,11 +87,11 @@ public class RestaurantCRUDImpl implements RestaurantCRUD {
 	    Restaurant oldRestaurantData = rrepo.findById(restaurant_id)
 	            .orElseThrow(() -> new IDNotFoundException("ID not present!"));
 		
-		if(checkNewRestaurant(updated_restaurant))
+		if(!checkNewRestaurant(updated_restaurant))
 			throw new DataMissingException("Incomplete Data!");
 		
 		if(restaurant_id != updated_restaurant.getRestaurantId())
-			throw new IDMismatchException("ID in the url and in the message body not matching!");
+			throw new IDMismatchException("ID in the url("+restaurant_id+")and in the message body("+updated_restaurant.getRestaurantId()+") not matching!");
 		
 		updated_restaurant.setRestaurantId(oldRestaurantData.getRestaurantId());
 		
@@ -96,10 +101,8 @@ public class RestaurantCRUDImpl implements RestaurantCRUD {
 	// Function to delete the restaurant from the database
 	@Override
 	public void deleteRestaurant(long restaurant_id) throws IDNotFoundException {
-		Restaurant restaurant = rrepo.findById(restaurant_id)
-	            .orElseThrow(() -> new IDNotFoundException("ID not present!"));
 		
-		rrepo.delete(restaurant);
+		crepo.delete(crepo.findById(restaurant_id).orElseThrow(() -> new IDNotFoundException("ID not present!")));
 	}
 	
 	@Override
@@ -148,7 +151,6 @@ public class RestaurantCRUDImpl implements RestaurantCRUD {
 		// Retrieve the existing restaurant
 	    Item oldItem = irepo.findById(item_id)
 	            .orElseThrow(() -> new IDNotFoundException("ID not present!"));
-
 		
 		if(!checkNewItem(new_item))
 			throw new DataMissingException("Incomplete Data!");
@@ -156,9 +158,13 @@ public class RestaurantCRUDImpl implements RestaurantCRUD {
 		if(item_id != oldItem.getItemId())
 			throw new IDMismatchException("ID in the url and in the message body not matching!");
 		
-		new_item.setItemId(oldItem.getItemId());
-		
-		irepo.save(new_item);
+		oldItem.setCategory(new_item.getCategory());
+		oldItem.setDescription(new_item.getDescription());
+		oldItem.setItemCost(new_item.getItemCost());
+		oldItem.setItemName(new_item.getItemName());
+		oldItem.setQuantity(new_item.getQuantity());
+
+		irepo.save(oldItem);
 		
 	}
 

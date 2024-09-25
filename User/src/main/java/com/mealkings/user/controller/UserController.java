@@ -6,6 +6,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import com.mealkings.user.entity.Customer;
+import com.mealkings.user.exceptions.UserAlreadyExistsException;
+import com.mealkings.user.exceptions.UserNotFoundException;
 import com.mealkings.user.service.UserService;
 
 import java.util.List;
@@ -19,7 +21,13 @@ public class UserController {
 
     @PostMapping("/add")
     public ResponseEntity<Customer> createUser(@RequestBody Customer user) {
-        Customer createdUser = userService.createUser(user);
+        Customer createdUser;
+		try {
+			createdUser = userService.createUser(user);
+		} catch (UserAlreadyExistsException e) {
+			System.out.println(e.getMessage());
+			return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+		}
         return new ResponseEntity<>(createdUser, HttpStatus.CREATED);
     }
 
@@ -31,19 +39,36 @@ public class UserController {
 
     @GetMapping("/{id}")
     public ResponseEntity<Customer> getUserById(@PathVariable Long id) {
-    	Customer user = userService.getUserById(id);
+    	Customer user;
+		try {
+			user = userService.getUserById(id);
+		} catch (UserNotFoundException e) {
+			System.out.println(e.getMessage());
+			return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+		}
         return new ResponseEntity<>(user, HttpStatus.OK);
     }
 
     @PutMapping("/update/{id}")
     public ResponseEntity<Customer> updateUser(@PathVariable Long id, @RequestBody Customer user) {
-    	Customer updatedUser = userService.updateUser(id, user);
+    	Customer updatedUser;
+		try {
+			updatedUser = userService.updateUser(id, user);
+		} catch (UserNotFoundException e) {
+			System.out.println(e.getMessage());
+			return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+		}
         return new ResponseEntity<>(updatedUser, HttpStatus.OK);
     }
 
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<Void> deleteUser(@PathVariable Long id) {
-        userService.deleteUser(id);
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        try {
+			userService.deleteUser(id);
+		} catch (UserNotFoundException e) {
+			System.out.println(e.getMessage());
+			return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+		}
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }
