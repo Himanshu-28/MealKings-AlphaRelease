@@ -1,0 +1,69 @@
+Restaurant Microservice –
+ 
+GET(“/restaurant/{restaurant_id} “) –  Gets the restaurant details
+
+POST(“/restaurant/add”) – Add new restaurant
+
+PUT(“/restaurant/update/{restaurant_id}”) – Update the restaurant details
+
+DELETE(“restaurant/delete/{restaurant_id}”) – Delete the restaurant
+
+GET(“/restaurant/{restaurant_id} /rating“) –  Gets the restaurant ratings
+
+GET(“/restaurant/{restaurant_id}/items”) -  Gets all the items in a restaurant
+
+GET(“restaurant/item/{item_id}”) – Individual item details
+
+POST(“/restaurant/{restaurant_id}/item/add”) – Add individual item
+
+PUT(“/restaurant/item/{item_id}”) – Update an item
+
+DELETE(“/restaurant/item/{item_id}”) – Delete an item
+ 
+User Microservice
+ 
+GET(“/customer/{customer_id} “) –  Gets the customer details
+ 
+POST(“/customer/add”) – Add new customer
+
+PUT(“/customer/update/{customer_id}”) – Update the customer details
+
+DELETE(“customer/delete/{customer_id}”) – Delete the customer
+ 
+Cart Microservice
+GET(“/cart/{customer_id} “) –  Gets the cart of a customer
+ 
+POST(“/customer/{customer_id}”) – creates new cart for the customer
+ 
+GET(“/cart/{customer_id}/items “) –  Gets the cart items of a customercart
+ 
+POST(“/cart /{customer_id}/items”) – Adds item to cart
+ 
+DELETE(“{customer_id}/items/{itemId} – Delete the item from the customer cart
+ 
+Order Microservice
+
+POST(“/order/add”) – Add new order
+
+PUT(“/{order_id}/cancel”) – Update status to cancelled
+ 
+GET(“/order/restaurant/{restaurant_id}/active”)– Active orders of restaurant
+ 
+GET(“/order/user/{user_id}/active”)– Active orders of user
+ 
+GET(“/order/restaurant/{restaurant_id}/past”)– past orders of restaurant
+ 
+GET(“/order/user/{user_id}/past”)– past orders of user
+ 
+POST(“/{order_id}/updatestatus”) – change status of order
+ 
+Discount Microservice
+GET(“/discount/{discount_id} “) –  Gets the discount details
+ 
+POST(“/discount/add”) – Add new discount
+
+PUT(“/discount/update/{ discount _id}”) – Update the discount details
+
+DELETE(“discount/delete/{discount_id}”) – Delete the discount
+
+GET(“discount/all”) – Get all discount
