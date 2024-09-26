@@ -86,11 +86,12 @@ const PaymentPage = () => {
   };
 
   return (
-    <div className="container-fluid" style={{ backgroundColor: "container-fluid bg-light", height: "100vh" }}>
+    <div className="container-fluid" style={{ backgroundColor: "#f8f9fa", height: "100vh" }}>
       <div className="row justify-content-center align-items-center h-100">
         <div className="col-md-6 bg-light p-4 rounded" style={{ border: "1px solid #007BFF", borderRadius: "10px" }}>
           <h1 className="text-center" style={{ color: "#007BFF" }}>Payment Page</h1>
           <p className="text-center" style={{ color: "#007BFF" }}>Final Price: Rs.{finalPrice}</p>
+
 
           <div>
             <h2 style={{ color: "#007BFF" }}>Choose Payment Method</h2>
