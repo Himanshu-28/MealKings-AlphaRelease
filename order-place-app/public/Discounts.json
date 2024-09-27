@@ -1,0 +1,25 @@
+{
+  "discounts": [
+    {
+      "discountCode": "SAVE10",
+      "discountPercentage": 10,
+      "isActive": true,
+      "startDate": "2024-09-01T00:00:00Z",
+      "endDate": "2024-09-30T23:59:59Z"
+    },
+    {
+      "discountCode": "SAVE20",
+      "discountPercentage": 20,
+      "isActive": true,
+      "startDate": "2024-09-20T00:00:00Z",
+      "endDate": "2025-09-25T23:59:59Z"
+    },
+    {
+      "discountCode": "SAVE30",
+      "discountPercentage": 30,
+      "isActive": false,
+      "startDate": "2024-09-15T00:00:00Z",
+      "endDate": "2024-09-20T23:59:59Z"
+    }
+  ]
+}
