@@ -31,6 +31,8 @@ spring:
 logging:
   level:
     org.springframework.security: DEBUG
+    org.thymeleaf: DEBUG
+
 server:
   port: 8888
 eureka:

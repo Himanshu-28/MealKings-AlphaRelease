@@ -17,6 +17,7 @@ import org.springframework.security.web.server.SecurityWebFilterChain;
 import org.springframework.security.web.server.authentication.ServerAuthenticationSuccessHandler;
 
 import com.mealkings.authentication.service.CustomUserDetailsService;
+import com.utils.CustomAuthenticationHandler;
 
 import reactor.core.publisher.Mono;
 
@@ -26,7 +27,7 @@ import reactor.core.publisher.Mono;
 public class WebSecurityConfig {
 
 	@Autowired
-	public ServerAuthenticationSuccessHandler authenticationHandler;
+	public CustomAuthenticationHandler authenticationHandler;
 
 	@Autowired
 	public CustomUserDetailsService detailsServiceImpl;
@@ -44,25 +45,50 @@ public class WebSecurityConfig {
 
 	@Bean
 	public SecurityWebFilterChain configure(ServerHttpSecurity http) throws Exception {
-		http.authorizeExchange(auth -> 
-				auth.pathMatchers( "/restaurant/**").permitAll()
-				.pathMatchers("/customer/**").permitAll()
-				.pathMatchers("/restaurant/**").permitAll()
-				.pathMatchers("/order/**").permitAll()
-				.pathMatchers("/cart/**").permitAll()
-				.pathMatchers("/discount/**").permitAll()
-				.anyExchange().authenticated())
-				.formLogin(formLogin -> formLogin.authenticationSuccessHandler(authenticationHandler))
-				.logout(logout -> logout.logoutUrl("/logout"))
-				.csrf(csrf->csrf.disable())
-				.cors()
-				.and()
-				.exceptionHandling(eh->eh
-				.accessDeniedHandler((exchange,e)->{
-					exchange.getResponse().setStatusCode(HttpStatus.FORBIDDEN);
-                    return exchange.getResponse().setComplete();
-				}));
-				
+//		http.authorizeExchange(auth -> 
+//				auth.pathMatchers( "/restaurant/**").permitAll()
+//				.pathMatchers("/customer/**").permitAll()
+//				.pathMatchers("/restaurant/**").permitAll()
+//				.pathMatchers("/order/**").permitAll()
+//				.pathMatchers("/cart/**").permitAll()
+//				.pathMatchers("/discount/**").permitAll()
+//				.pathMatchers("/users/**").permitAll()
+//				.anyExchange().authenticated())
+//				.formLogin(formLogin -> formLogin.authenticationSuccessHandler(authenticationHandler))
+//				.logout(logout -> logout.logoutUrl("/logout"))
+//				.csrf(csrf->csrf.disable())
+//				.cors()
+//				.and()
+//				.exceptionHandling(eh->eh
+//				.accessDeniedHandler((exchange,e)->{
+//					exchange.getResponse().setStatusCode(HttpStatus.FORBIDDEN);
+//                    return exchange.getResponse().setComplete();
+//				}));
+		
+		http
+	    .authorizeExchange(auth -> 
+	        auth.pathMatchers("/restaurant/**").permitAll()
+	            .pathMatchers("/customer/**").permitAll()
+	            .pathMatchers("/order/**").permitAll()
+	            .pathMatchers("/cart/**").permitAll()
+	            .pathMatchers("/discount/**").permitAll()
+	            .pathMatchers("/users/login").permitAll() // Ensure login page is accessible
+	            .anyExchange().authenticated())
+	    .csrf().and()
+	    .formLogin(formLogin -> formLogin
+//	    		.loginPage("/users/login")
+	        .authenticationSuccessHandler(authenticationHandler))
+	    .logout(logout -> logout
+	        .logoutUrl("/logout"))
+	    .csrf(csrf -> csrf.disable()) // Consider enabling CSRF for security
+	    .cors()
+	    .and()
+	    .exceptionHandling(eh -> eh
+	        .accessDeniedHandler((exchange, e) -> {
+	            exchange.getResponse().setStatusCode(HttpStatus.FORBIDDEN);
+	            return exchange.getResponse().setComplete();
+	        }));
+
 		
 		return http.build();
 	}
