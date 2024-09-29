@@ -1,5 +1,7 @@
 package com.mealkings.payment.entity;
 
+import java.time.LocalDateTime;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -28,6 +30,9 @@ public class Payment {
     @Column(name="restaurant_id")
     private Long restaurantId;
     
+    @Column(name="customer_id")
+    private Long customerId;
+    
     @Column
     private Double totalAmount;
     
@@ -36,6 +41,9 @@ public class Payment {
     
     @Column
     private String status; 
+    
+    @Column
+    private LocalDateTime timestamp;
 }
 
 

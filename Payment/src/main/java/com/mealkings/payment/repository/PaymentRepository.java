@@ -11,6 +11,7 @@ import com.mealkings.payment.entity.Payment;
 public interface PaymentRepository extends JpaRepository<Payment, Long>{
     List<Payment> findByRestaurantId(Long restaurantId);
     Optional<Payment> findByOrderId(Long orderId);
+    List<Payment> findByCustomerId(Long customerId); 
 
 
 

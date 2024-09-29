@@ -61,4 +61,10 @@ public class PaymentController {
 	        List<Payment> payments = paymentService.findByRestaurantId(restaurant_id);
 	        return payments.isEmpty() ? ResponseEntity.notFound().build() : ResponseEntity.ok(payments);
 	    }
+	    
+	    @GetMapping("/customer/{customer_id}")
+	    public ResponseEntity<List<Payment>> getPaymentsByCustomerId(@PathVariable Long customer_id) {
+	        List<Payment> payments = paymentService.findByCustomerId(customer_id);
+	        return payments.isEmpty() ? ResponseEntity.notFound().build() : ResponseEntity.ok(payments);
+	    }
 }

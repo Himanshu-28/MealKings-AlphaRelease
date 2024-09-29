@@ -39,6 +39,11 @@ public class PaymentServiceImpl implements PaymentService {
 	    public Optional<Payment> findByOrderId(Long orderId) {
 	        return paymentRepository.findByOrderId(orderId); 
 	    }
+	    
+	    @Override
+	    public List<Payment> findByCustomerId(Long customerId) {
+	        return paymentRepository.findByCustomerId(customerId);
+	    }
 
 	
 

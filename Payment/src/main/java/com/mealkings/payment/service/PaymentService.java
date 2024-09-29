@@ -12,6 +12,7 @@ public interface PaymentService {
     List<Payment> findByRestaurantId(Long restaurantId);
     Optional<Payment> findByOrderId(Long orderId); 
     String getPaymentStatus(Long id) throws PaymentNotFoundException;
+    List<Payment> findByCustomerId(Long customerId); 
 }
 
 
