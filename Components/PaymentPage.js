@@ -2,10 +2,10 @@ import React, { useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import axios from 'axios';
 
-const PaymentPage = () => {
+export default function Component() {
   const navigate = useNavigate();
   const location = useLocation();
-  const { cartItems, finalPrice, cartId, customerId, restaurantId, userAddress } = location.state || {};
+  const { cartItems, finalPrice, userAddress, totalPrice, discountCode, cartId, customerId, restaurantId } = location.state || {};
 
   const [paymentMethod, setPaymentMethod] = useState('card');
   const [paymentDetails, setPaymentDetails] = useState({
@@ -20,8 +20,33 @@ const PaymentPage = () => {
     setPaymentDetails({ ...paymentDetails, [e.target.name]: e.target.value });
   };
 
+  const handlePaymentMethodChange = (e) => {
+    setPaymentMethod(e.target.value);
+    // Reset payment details when switching methods
+    setPaymentDetails({
+      cardNumber: '',
+      validThru: '',
+      cvv: '',
+      upiId: '',
+    });
+  };
+
   const handlePayment = async () => {
     try {
+      // Validate payment details
+      if (paymentMethod === 'card') {
+        if (!paymentDetails.cardNumber || !paymentDetails.validThru || !paymentDetails.cvv) {
+          setError('Please fill in all card details.');
+          return;
+        }
+      } else if (paymentMethod === 'upi') {
+        if (!paymentDetails.upiId) {
+          setError('Please enter your UPI ID.');
+          return;
+        }
+      }
+
+      const discountAmount = totalPrice - finalPrice;
       const newOrder = {
         neworder: {
           totalAmount: finalPrice,
@@ -29,8 +54,8 @@ const PaymentPage = () => {
           paymentMethod: paymentMethod,
           orderDate: new Date().toISOString(),
           deliverAddress: userAddress,
-          discountApplied: false,
-          discountAmount: 0,
+          discountApplied: discountAmount > 0,
+          discountAmount: discountAmount,
         },
         customer_id: customerId,
         restaurant_id: restaurantId,
@@ -50,10 +75,17 @@ const PaymentPage = () => {
 
       await axios.post('http://localhost:8086/payments', paymentData);
 
-      navigate('/order-confirmation', { state: { confirmed: true, orderId: createdOrderId, finalPrice } });
+      navigate('/order-confirmation', { 
+        state: { 
+          confirmed: true, 
+          orderId: createdOrderId, 
+          finalPrice,
+          userAddress
+        } 
+      });
     } catch (error) {
       console.error('Error processing payment:', error);
-      setError('There was an error processing your payment.');
+      setError('There was an error processing your payment. Please try again.');
     }
   };
 
@@ -63,12 +95,15 @@ const PaymentPage = () => {
       <div className="card">
         <div className="card-body">
           <h5 className="card-title">Order Summary</h5>
-          <p><strong>Total Amount:</strong> Rs. {finalPrice}</p>
+          <p><strong>Total Amount:</strong> Rs. {totalPrice.toFixed(2)}</p>
+          {discountCode && <p><strong>Discount Applied:</strong> {discountCode}</p>}
+          <p><strong>Final Amount:</strong> Rs. {finalPrice.toFixed(2)}</p>
+          <p><strong>Delivery Address:</strong> {userAddress}</p>
           <h5 className="mt-4">Payment Method</h5>
           <select
             className="form-select mb-3"
             value={paymentMethod}
-            onChange={(e) => setPaymentMethod(e.target.value)}
+            onChange={handlePaymentMethodChange}
           >
             <option value="card">Credit/Debit Card</option>
             <option value="upi">UPI</option>
@@ -106,19 +141,17 @@ const PaymentPage = () => {
               type="text"
               className="form-control mb-2"
               name="upiId"
-              placeholder="UPI ID"
+              placeholder="Enter your UPI ID"
               value={paymentDetails.upiId}
               onChange={handlePaymentChange}
             />
           )}
           {error && <div className="alert alert-danger mt-3">{error}</div>}
-          <button className="btn btn-primary mt-3" onClick={handlePayment}>
+          <button className="btn btn-primary mt-3 w-100" onClick={handlePayment}>
             Pay Now
           </button>
         </div>
       </div>
     </div>
   );
-};
-
-export default PaymentPage;
+} 
