@@ -28,6 +28,5 @@ public class CartItem {
 
     private int quantity; // Quantity of the item in the cart
     private double totalPrice; // Total price for this quantity of the item
-    
-    
+
 }

@@ -12,6 +12,8 @@ public interface RestaurantCRUD {
 	
 	public void addRestaurant(Restaurant restaurant) throws DataMissingException;
 	
+	public List<Restaurant> getAllRestaurants();
+	
 	public Restaurant getRestaurantDetails(long restaurant_id) throws IDNotFoundException;
 	
 	public void updateRestaurantDetails(long restaurant_id, Restaurant updated_restaurant) throws IDNotFoundException, DataMissingException, IDMismatchException;

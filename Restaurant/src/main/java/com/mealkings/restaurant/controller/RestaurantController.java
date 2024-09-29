@@ -38,6 +38,13 @@ public class RestaurantController {
 		}
 	}
 	
+	// API call to fetch data from the database basis the ID
+	@GetMapping("/all")
+	public ResponseEntity<List<Restaurant>> getAllRestaurants(@PathVariable long restaurant_id)
+	{
+		return ResponseEntity.ok(resService.getAllRestaurants());
+	}
+	
 	// API call to on-board new restaurant to the database
 	@PostMapping("/add")
 	public ResponseEntity<String> addRestaurant(@RequestBody Restaurant restaurant) {
@@ -84,6 +91,7 @@ public class RestaurantController {
 		}
 	}
 	
+	// API call to fetch all items of a restaurant
 	@GetMapping("{restaurant_id}/items")
 	public ResponseEntity<List<Item>> getAllItems(@PathVariable long restaurant_id){
 		try {
@@ -94,6 +102,7 @@ public class RestaurantController {
 		}
 	}
 	
+	// API call to fetch item basis the item ID
 	@GetMapping("/item/{item_id}")
 	public ResponseEntity<Item> getItem(@PathVariable int item_id){
 		try {
@@ -104,6 +113,7 @@ public class RestaurantController {
 		}
 	}
 	
+	// API call to add item basis the restaurant ID
 	@PostMapping("{restaurant_id}/item/add")
 	public ResponseEntity<String> addItem(@PathVariable long restaurant_id, @RequestBody Item item){
 		try {
@@ -125,7 +135,7 @@ public class RestaurantController {
 		}
 	}
 	
-	// API Call to delete a restaurant based on the ID
+	// API Call to delete an item based on the item ID
 	@DeleteMapping("/item/{item_id}")
 	public ResponseEntity<String> deleteItem(@PathVariable int item_id)
 	{

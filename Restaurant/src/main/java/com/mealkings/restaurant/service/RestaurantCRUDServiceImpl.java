@@ -74,4 +74,10 @@ public class RestaurantCRUDServiceImpl implements RestaurantCRUDService {
 		// TODO Auto-generated method stub
 		return resCrudOps.getAllItem(restaurant_id);
 	}
+
+	@Override
+	public List<Restaurant> getAllRestaurants() {
+		// TODO Auto-generated method stub
+		return resCrudOps.getAllRestaurants();
+	}
 }

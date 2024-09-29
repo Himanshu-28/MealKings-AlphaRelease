@@ -17,12 +17,7 @@ public class Cart {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long cart_id;
-
-    @OneToOne
-    @JoinColumn(name = "restaurantId", nullable = false)
-    @JsonManagedReference(value = "restaurant-cart")
-    private Restaurant restaurant;
-
+    
     @OneToOne
     @JoinColumn(name = "customer_id", referencedColumnName = "customer_id")
     @JsonManagedReference(value = "customer-cart")

@@ -18,12 +18,6 @@ public class CartController {
     @Autowired
     private CartImpl cartService;
 
-    @PostMapping("/{customerId}")
-    public ResponseEntity<Cart> createCart(@PathVariable Long customerId, @RequestBody Long restaurant_id) {
-        Cart createdCart = cartService.createCart(customerId, restaurant_id);
-        return ResponseEntity.ok(createdCart);
-    }
-
     @GetMapping("/{customerId}")
     public ResponseEntity<Cart> getCartByUserId(@PathVariable Long customerId) {
         Cart cart = cartService.getCartByUserId(customerId);
@@ -36,15 +30,22 @@ public class CartController {
         return ResponseEntity.ok(items);
     }
 
-    @PostMapping("/{customerId}/items")
+    @PostMapping("/{customerId}/item")
     public ResponseEntity<Void> addItemToCart(@PathVariable Long customerId, @RequestBody AddItemRequest request) {
         cartService.addItemToCart(customerId, request.getItemId(), request.getQuantity());
         return ResponseEntity.ok().build();
     }
 
+    @PutMapping("/{customerId}/items/{itemId}")
+    public ResponseEntity<Void> updateItemQuantity(@PathVariable Long customerId, @PathVariable int itemId, @RequestBody int quantity) {
+        cartService.updateCartQuantity(customerId, itemId, quantity);
+        return ResponseEntity.ok().build();
+    }
+    
     @DeleteMapping("/{customerId}/items/{itemId}")
     public ResponseEntity<Void> removeItemFromCart(@PathVariable Long customerId, @PathVariable Long itemId) {
-        cartService.removeItemFromCart(customerId, itemId);
-        return ResponseEntity.ok().build();
+    	cartService.removeItemFromCart(customerId, itemId);
+    	cartService.checkEmpty(customerId);
+    	return ResponseEntity.ok().build();
     }
 }

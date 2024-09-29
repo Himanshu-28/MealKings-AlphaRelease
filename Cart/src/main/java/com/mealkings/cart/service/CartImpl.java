@@ -9,19 +9,26 @@ import com.mealkings.cart.exceptions.ItemNotFoundException;
 import com.mealkings.cart.exceptions.QuantityNotAvailableException;
 import com.mealkings.cart.exceptions.RestaurantNotFoundException;
 import com.mealkings.cart.exceptions.CartAlreadyExistsException;
+import com.mealkings.cart.repository.CartItemRepository;
 import com.mealkings.cart.repository.CartRepository;
 import com.mealkings.cart.repository.CustomerRepository;
 import com.mealkings.cart.repository.ItemRepository;
 import com.mealkings.cart.repository.RestaurantRepository;
 
+import jakarta.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 @Service
 public class CartImpl implements CartDAO {
+	
+	@Autowired
+	private CartItemRepository citemRepo;
 
     @Autowired
     private CartRepository cartRepository;
@@ -34,23 +41,6 @@ public class CartImpl implements CartDAO {
     
     @Autowired
     private RestaurantRepository restaurantRepository;
-
-    @Override
-    public Cart createCart(Long customer_id, Long restaurant_id) {
-
-        Cart existingCart = cartRepository.findByCustomer_CustomerId(customer_id);
-        if (existingCart != null) {
-            throw new CartAlreadyExistsException("Cart already exists for user ID: " + customer_id);
-        }
-        
-        Cart cart = new Cart();
-        
-        cart.setCustomer(customerRepository.findById(customer_id).orElseThrow(()->new CustomerNotFoundException(customer_id+" not found!")));
-        cart.setItems(new ArrayList<CartItem>());
-        cart.setRestaurant(restaurantRepository.findById(restaurant_id).orElseThrow(()->new RestaurantNotFoundException(restaurant_id+" not found!")));
-        
-        return cartRepository.save(cart);
-    }
 
     @Override
     public Cart getCartByUserId(Long userId) {
@@ -68,7 +58,33 @@ public class CartImpl implements CartDAO {
         Cart cart = cartRepository.findByCustomer_CustomerId(customerId);
         
         if (cart == null)
-            throw new CartNotFoundException("Cart not found for user ID: " + customerId);
+        {
+        	 cart = new Cart();
+             
+             cart.setCustomer(customerRepository.findById(customerId).orElseThrow(()->new CustomerNotFoundException(customerId+" not found!")));
+             cart.setItems(new ArrayList<CartItem>());
+             cartRepository.save(cart);
+        }
+        
+        List<CartItem> cartitems = cart.getItems();
+        
+        for(CartItem citem: cartitems)
+        {
+        	if(citem.getItem() == item)
+        	{
+        		if(citem.getQuantity()+quantity > item.getQuantity())
+                	throw new QuantityNotAvailableException("Quantity requested is not available");
+        		
+        		cart.getItems().remove(citem);
+        		
+        		citem.setQuantity(citem.getQuantity()+quantity);
+        		citem.setTotalPrice(citem.getQuantity()*citem.getItem().getItemCost());
+        		
+        		cart.getItems().add(citem);
+        		cartRepository.save(cart);
+        		return;
+        	}
+        }
         
         if(item.getQuantity() < quantity)
         	throw new QuantityNotAvailableException("Quantity requested is not available");
@@ -83,16 +99,21 @@ public class CartImpl implements CartDAO {
         cart.getItems().add(citem);
         cartRepository.save(cart);
     }
-
+    
+    @Transactional
     @Override
     public void removeItemFromCart(Long userId, Long itemId) {
-        Cart cart = cartRepository.findByCustomer_CustomerId(userId);
-        if (cart == null) {
-            throw new CartNotFoundException("Cart not found for user ID: " + userId);
-        }
-
-        cart.getItems().removeIf(item -> item.getId() == itemId);
-        cartRepository.save(cart);
+    	Cart cart = cartRepository.findByCustomer_CustomerId(userId);
+    	
+    	CartItem item = citemRepo.findByCartAndItem_itemId(cart, itemId);
+    	citemRepo.delete(item);
+    }
+    
+    @Transactional
+    public void checkEmpty(Long customerId) {
+    	Cart cart = cartRepository.findByCustomer_CustomerId(customerId);
+    	if(cart.getItems().isEmpty())
+    		cartRepository.deleteById(cart.getCart_id());
     }
 
     @Override
@@ -103,6 +124,35 @@ public class CartImpl implements CartDAO {
             throw new CartNotFoundException("Cart not found for user ID: " + userId);
             
         return cart.getItems();
+    }
+    
+    public void updateCartQuantity(Long customerId, int itemId, int quantity) {
+    	Item item = itemRepository.findById(itemId).orElseThrow(() -> new ItemNotFoundException(itemId+" does not exist!"));
+        Cart cart = cartRepository.findByCustomer_CustomerId(customerId);
+        
+        if (cart == null)
+        	throw new CartNotFoundException("Cart does not exist");
+        
+        List<CartItem> cartitems = cart.getItems();
+        
+        for(CartItem citem: cartitems)
+        {
+        	if(citem.getItem() == item)
+        	{
+        		if(quantity > item.getQuantity())
+                	throw new QuantityNotAvailableException("Quantity requested is not available");
+        		
+        		cart.getItems().remove(citem);
+        		
+        		citem.setQuantity(quantity);
+        		citem.setTotalPrice(citem.getQuantity()*citem.getItem().getItemCost());
+        		
+        		cart.getItems().add(citem);
+        		cartRepository.save(cart);
+        		return;
+        	}
+        }
+        throw new ItemNotFoundException("Item does not exist in cart!");
     }
 
 	@Override

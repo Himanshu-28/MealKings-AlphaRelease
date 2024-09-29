@@ -46,11 +46,8 @@ public class Restaurant {
     // One restaurant can have many items
     @OneToMany(mappedBy = "restaurant", cascade = CascadeType.ALL)
     @JsonManagedReference(value = "restaurant-item")
-    private List<Item> items; // This will hold all the items related to the restaurant
     
-    @OneToOne(mappedBy = "restaurant")
-    @JsonBackReference(value = "restaurant-cart")
-    private Cart cart;
+    private List<Item> items; // This will hold all the items related to the restaurant
     
     @OneToMany(mappedBy = "restaurant", cascade = CascadeType.ALL)
     @JsonManagedReference(value = "restaurant-order")

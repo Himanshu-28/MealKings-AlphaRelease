@@ -1,8 +1,0 @@
-package com.mealkings.authentication.service;
-
-import com.mealkings.authentication.model.User;
-
-public interface UserService {
-    public void registerUser(User user);
-   
-}
