@@ -1,9 +1,9 @@
 import React from 'react';
 import { useLocation } from 'react-router-dom';
 
-const OrderConfirmationPage = () => {
+export default function Component() {
   const location = useLocation();
-  const { confirmed, orderId, finalPrice } = location.state || {};
+  const { confirmed, orderId, finalPrice, userAddress } = location.state || {};
 
   if (!confirmed) {
     return (
@@ -26,13 +26,11 @@ const OrderConfirmationPage = () => {
           <p className="text-center">Thank you for your order. Your order has been successfully placed and confirmed.</p>
           <div className="mt-4">
             <p><strong>Order ID:</strong> {orderId}</p>
-            <p><strong>Total Amount Paid:</strong> Rs. {finalPrice}</p>
+            <p><strong>Total Amount Paid:</strong> Rs. {finalPrice.toFixed(2)}</p>
+            <p><strong>Delivery Address:</strong> {userAddress}</p>
           </div>
-          
         </div>
       </div>
     </div>
   );
-};
-
-export default OrderConfirmationPage;
+}
