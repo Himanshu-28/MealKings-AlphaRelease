@@ -1,0 +1,132 @@
+/* custom.css style sheet
+
+body {
+    display: flex;
+    flex-direction: column; 
+    min-height: 100vh; 
+    margin: 0; 
+    background-color: #FFF5E1; 
+    color: #0C1844; 
+    font-family: Arial, sans-serif; 
+}
+
+h1, h2 {
+    color: #C80036; 
+    text-align: center; 
+}
+
+.btn-custom {
+    background-color: #FF6969; 
+    color: white; 
+    border: none; 
+}
+
+.btn-custom:hover {
+    background-color: #C80036; 
+}
+
+.card {
+    border: 1px solid #C80036; 
+    border-radius: 8px; 
+    transition: transform 0.3s; 
+    margin-bottom: 1rem; 
+}
+
+
+
+.card-header {
+    background-color: #FF6969; 
+    color: white; 
+    font-weight: bold; 
+    text-align: center; 
+}
+
+.list-group-item {
+    background-color: #FFF5E1; 
+    border: 1px solid #C80036; 
+    border-radius: 5px; 
+    margin-bottom: 10px; 
+}
+
+.list-group-item span {
+    font-weight: bold; 
+}
+
+.mt-4 {
+    margin-top: 2rem; 
+}
+
+.container {
+    flex: 1; 
+    max-width: 1200px; 
+}
+
+.footer {
+    text-align: center;
+    padding: 1rem;
+    background-color: #0e0d0d; 
+    color: white; 
+    width: 100%; 
+}
+
+.footer span {
+    font-size: 0.9rem; 
+}
+
+.btn-secondary {
+    background-color: #C80036; 
+    color: white; 
+    margin-left: 0.8rem;
+}
+
+.btn-secondary:hover {
+    background-color: #FF6969; 
+}
+
+.card {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
+} */
+
+/* .container{
+    display: grid;
+    grid-template-rows: 80px auto 1fr auto 50px;
+    grid-template-columns: 1fr 4fr 1fr;
+    height: 100vh;
+
+    grid-template-areas: 
+    "header             header             header"
+    "left-aside         banner             right-aside"
+    "left-aside         main               right-aside"
+    "left-aside         low-content        right-aside"
+    "footer             footer             footer"
+    ;
+
+    grid-gap: 10px; padding: 10px; font-weight: 600; font-size: 20px;
+}
+
+@media (max-width: 678px) {
+    .container{
+        grid-template-rows: 50px 50px 50px 1fr 50px 50px 50px;
+        grid-template-columns: 1fr;
+        grid-template-areas: 
+        "header"
+        "banner"
+        "left-aside"
+        "main"
+        "right-aside"
+        "low-content"
+        "footer"
+        ;
+    }
+} */
+
+/* .navbar{
+    backdrop-filter: blur(30px);
+    box-shadow: 0px 0px 30px rgba(227, 228, 237, 0.37);
+    border: 2px solid rgba(255, 255, 255, 0.18);
+} */
+
+
+img { 
+    image-rendering: crisp-edges;height: 9000px;
+}

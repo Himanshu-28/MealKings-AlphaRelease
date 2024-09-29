@@ -1,0 +1,99 @@
+body {
+  
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+/* img{
+  /* aspect-ratio: 3/2; */
+  /* width: '40px';
+  margin-right: '10px';
+  height: 50px;
+
+} */ 
+/* 
+.cardd{
+  display: flex;
+  flex-wrap: wrap;
+}
+ */
+
+h1 {
+  color: #333;
+}
+
+.navbar-brand {
+  font-weight: bold;
+}
+
+.card {
+  border-radius: 8px;
+}
+
+button {
+  margin-top: 1em;
+}
+.App {
+  font-family: Arial, sans-serif;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.restaurant-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.restaurant-card {
+  border: 1px solid #ccc;
+  padding: 15px;
+  border-radius: 8px;
+  width: 200px;
+}
+
+h2 {
+  margin-bottom: 20px;
+}
+
+main {
+  flex-grow: 1; /* This makes the main content expand to fill available space */
+}
+
+.transparent-navbar {
+  background-color: rgba(255, 255, 255, 1) !important;
+}
+/* 
+.footer {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  background-color: red;
+  color: white;
+  text-align: center;
+} */
+
+/* .cardd  .card .card-body{
+  flex: 1 1 200px;
+  align-content: center;
+  flex-direction: column;
+  flex: 50%; /* or - flex: 0 50% - or - flex-basis: 50% - */
+  /* demo
+  box-shadow: 0 0 0 1px black;
+  margin-bottom: 10px; */
+
+/* } */
+
+.bg2 { 
+  display: flex;
+}
